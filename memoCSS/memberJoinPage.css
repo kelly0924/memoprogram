@@ -1,0 +1,41 @@
+span {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* .formDiv {
+  width: 300px;
+  height: 30px;
+  border: 0.5px solid black;
+} */
+.fromDivSelect {
+  width: 300px;
+  height: 30px;
+  border: 0.5px solid #004dc1;
+}
+.fromDivText {
+  width: 300px;
+  height: 30px;
+  border: 0.5px solid #004dc1;
+}
+#fromDivSubmit {
+  width: 300px;
+  height: 30px;
+  background-color: #004dc1;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 10px;
+}
+#formDivIdCheckButton {
+  width: 60px;
+  height: 25px;
+  border: 0.5px solid #004dc1;
+  color: #004dc1;
+  background-color: white;
+}
