@@ -1,0 +1,31 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fromDivText {
+  width: 300px;
+  height: 30px;
+  border: 0.1px solid white;
+  position: relative;
+  bottom: 5px;
+}
+.fromDiv {
+  width: 400px;
+  height: 50px;
+  border: 1px solid #004dc1;
+  margin-top: 10px;
+}
+.fromDivImg {
+  position: relative;
+  top: 5px;
+}
+.fromDivButton {
+  width: 400px;
+  height: 50px;
+  color: white;
+  font-size: 30px;
+  font-weight: 800;
+  background-color: #004dc1;
+  border: 0.2px solid #004dc1;
+}
