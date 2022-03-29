@@ -1,9 +1,4 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
-<%@ page import="java.sql.Connection"%>
-<%@ page import="java.sql.PreparedStatement"%>
-<%@ page import="java.sql.DriverManager"%>
-<%@ page import="java.sql.ResultSet"%>
-<%@ page import="java.util.*"%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -61,11 +56,15 @@
     </form>
 
     <script>
+
         function  idCheckEvent() {
             var userId=document.getElementById("fromDivId").value;//중복체크 버튼 클릭시 넘어 오는 사용자 id 값
             url = "checkId.jsp?userid="+userId;
-            var result = window.open(url,"chkid","width=400,height=200");
+            window.name="parentWindow"
+            window.open(url,"newWindow","height=200,width=400");//맥에서는 싸파리에서만 가능함 이유는 그냥 지원 하지 않느다고 함
+
             
+
         }
     </script>
 </body>
