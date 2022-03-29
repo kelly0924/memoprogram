@@ -9,7 +9,7 @@
     request.setCharacterEncoding("utf-8");
     String name=request.getParameter("userName");
     String id=request.getParameter("userId");
-    String pw=request.getParameter("userPw");
+    String usPw=request.getParameter("userPw");
     String pwCheck=request.getParameter("userPwCheck");
     String department=request.getParameter("Departments");
     String ranks=request.getParameter("ranks");
@@ -18,7 +18,7 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect =DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduleDB", "schedule","1234");//데이터 베이스 계정 아이디, 데이터베이스 계정 비밀번호
 
-    if(name.equals("")||id.equals("")||pw.equals("")||department.equals("")||ranks.equals("")){
+    if(name.equals("")||id.equals("")||usPw.equals("")||department.equals("")||ranks.equals("")){
         inputCheck=true;
 
     }else{
@@ -26,7 +26,7 @@
         PreparedStatement query =connect.prepareStatement(sql);
         query.setString(1,id);
         query.setString(2,name);
-        query.setString(3.pw);
+        query.setString(3,usPw);    
         query.setString(4,department);
         query.setString(5,ranks);
 
