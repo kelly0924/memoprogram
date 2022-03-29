@@ -22,16 +22,16 @@
         inputCheck=true;
 
     }else{
-        String sql="INSERT INTO user(userId,userName,userPw,userDepartment,userRank) VALUES(?,?,?,?,?)";
-        PreparedStatement query =connect.prepareStatement(sql);
-        query.setString(1,id);
-        query.setString(2,name);
-        query.setString(3,usPw);    
-        query.setString(4,department);
-        query.setString(5,ranks);
-
-        query.executeUpdate();
-        response.sendRedirect("logPage.jsp");
+       // String sql="INSERT INTO user(userId,userName,userPw,userDepartment,userRank) VALUES(?,?,?,?,?)";
+       // PreparedStatement query =connect.prepareStatement(sql);
+       // query.setString(1,id);
+       // query.setString(2,name);
+       // query.setString(3,usPw);    
+       // query.setString(4,department);
+       // query.setString(5,ranks);
+//
+       // query.executeUpdate();
+       // response.sendRedirect("logPage.jsp");
     }
    
 %>

@@ -43,12 +43,13 @@
 
         <span>비밀번호<span>
         <div class="formDiv">
-            <input id="fromDivPw" class="fromDivText" type="password" name="userPw" onchange="checkPwEvent()">
+            <input id="fromDivPw" class="fromDivText" type="password" name="userPw" onchange="PwEvent()">
         </div>
 
         <span>비밀번호확인<span>
         <div class="formDiv">
-            <input id="fromDivePWCheck" class="fromDivText" type="password" name="userPwCheck" >
+            <input id="fromDivePWCheck" class="fromDivText" type="password" name="userPwCheck" onchange="PwEvent()" >
+            <span id="fromDivSpan"></span>
         </div>
 
         <div class="formDiv"> 
@@ -65,8 +66,9 @@
             window.open(url,"newWindow","height=200,width=400");//맥에서는 싸파리에서만 가능함 이유는 그냥 지원 하지 않느다고 함
         }
         //비밀 번호 확인 하기 
-        function checkPwEvent(){
-            var pw=document.getElementById("fromDivPw").value;
+        function PwEvent(){
+            var pw=document.getElementById("fromDivPw");
+            var pwCheck=document.getElementById("fromDivePWCheck");
             var SC = ["!","@","#","$","%"];
             var checkSC = 0;
             if(pw.length < 8 || pw.length>15){//비밀 번호는 8자 이상 15 이하 
@@ -77,7 +79,15 @@
                window.alert('!,@,#,$,% 의 특수문자가 들어가 있지 않습니다.')
                 document.getElementById('fromDivPw').value='';
             }
-
+            if(pw.value == pwCheck.value){
+                document.getElementById("fromDivSpan").innerHTML="일치 합니다.";
+                document.getElementById("fromDivSpan").style.color="blue";
+            }else{
+                document.getElementById("fromDivSpan").innerHTML="일치 하지 않습니다.";
+                document.getElementById("fromDivSpan").style.color="red";
+                document.getElementById("fromDivePWCheck".innerHTML="";
+            }
+        
         }
         
 
