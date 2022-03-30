@@ -66,6 +66,9 @@
             window.open(url,"newWindow","height=200,width=400");//맥에서는 싸파리에서만 가능함 이유는 그냥 지원 하지 않느다고 함
         }
         //비밀 번호 확인 하기 
+        //  var pwObj=document.getElementById("fromDivPw");
+        //  pwObj.addEventListener("onchange",pwEvent);
+         
         function pwEvent(){
             var pw=document.getElementById("fromDivPw").value;
             var SC = ["!","@","#","$","%"];
@@ -84,7 +87,6 @@
                 document.getElementById('pw').value='';
             }
             console.log("함수 호출")
-        
         }
         
        function checkPwEvent(){

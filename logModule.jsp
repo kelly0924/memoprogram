@@ -11,6 +11,7 @@
     String pw=request.getParameter("pwValue");
     String resultId="";
     String resultPw="";
+    String resultName="";
     String sessionId="";
     //DB 연결
     Class.forName("com.mysql.jdbc.Driver");
@@ -22,13 +23,15 @@
     ResultSet result=query.executeQuery();//데이터 베이스에 값을 불러와서 저장 하기 
     while(result.next()){
         resultId=result.getString(1);
-        resultPw=result.getString(2);
+        resultName=result.getString(2);
+        resultPw=result.getString(3);
     }
     if(id.equals(resultId) && pw.equals(resultPw)){//로그인이 성공 한 경우
-        //세션 생성 한다. 로그인에 대한 세션 생성 --> 서버에 에서 유일한 세션 아이디 부여 하고 서버에
-        // 사용자에 id와 pw 가 저장된다.
-        session.setAttribute("id", id);
+       // 세션 생성 한다. 로그인에 대한 세션 생성 --> 서버에 에서 유일한 세션 아이디 부여 하고 서버에
+         //사용자에 id와 pw 가 저장된다.
 		session.setAttribute("pw", pw);
+        session.setAttribute("id", id);
+        session.setAttribute("name",resultName);//사용자에 이름도 세션에 포함 시킨다.
         //생성한 세션에서 사용자 id, pw 가져오기
         sessionId = session.getId();//생성된 세션 id를 가져온다. 
         //세션 값을 쿠키에 넣어서 주기 쿠키 생성

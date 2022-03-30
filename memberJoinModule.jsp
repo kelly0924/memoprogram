@@ -10,7 +10,6 @@
     String name=request.getParameter("userName");
     String id=request.getParameter("userId");
     String usPw=request.getParameter("userPw");
-    String pwCheck=request.getParameter("userPwCheck");
     String department=request.getParameter("Departments");
     String ranks=request.getParameter("ranks");
     boolean inputCheck=false;
@@ -22,16 +21,24 @@
         inputCheck=true;
 
     }else{
-       // String sql="INSERT INTO user(userId,userName,userPw,userDepartment,userRank) VALUES(?,?,?,?,?)";
-       // PreparedStatement query =connect.prepareStatement(sql);
-       // query.setString(1,id);
-       // query.setString(2,name);
-       // query.setString(3,usPw);    
-       // query.setString(4,department);
-       // query.setString(5,ranks);
-//
-       // query.executeUpdate();
-       // response.sendRedirect("logPage.jsp");
+       String sql="INSERT INTO user(userId,userName,userPw,userDepartment,userRank) VALUES(?,?,?,?,?)";
+       PreparedStatement query =connect.prepareStatement(sql);
+       query.setString(1,id);
+       query.setString(2,name);
+       query.setString(3,usPw);    
+       query.setString(4,department);
+       query.setString(5,ranks);
+       query.executeUpdate();
+        //세션 생성 한다. 
+        //session.setAttribute("id", id);
+		//session.setAttribute("pw", usPw);
+        //session.setAttribute("Name",name);
+        ////생성한 세션에서 사용자 id, pw 가져오기
+        //sessionId = session.getId();//생성된 세션 id를 가져온다. 
+        ////세션 값을 쿠키에 넣어서 주기 쿠키 생성
+        //Cookie c = new Cookie("cookid", sessionId);
+		//response.addCookie(c);
+       response.sendRedirect("logPage.jsp");
     }
    
 %>
