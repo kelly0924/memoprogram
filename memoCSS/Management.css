@@ -1,3 +1,7 @@
+body {
+  background-color: black;
+}
+
 #header {
   display: flex;
   justify-content: space-evenly;
@@ -9,5 +13,23 @@
   justify-content: space-evenly;
   align-items: center;
   height: 40px;
-  border: 0.5px solid black;
+  border: 0.5px solid rgb(78, 78, 78);
+}
+.mainDivDate {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+.mainDivSpan {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+#headerLeftSpan {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+#userIcon {
+  color: rgb(117, 114, 114);
 }

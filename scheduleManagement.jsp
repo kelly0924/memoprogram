@@ -60,7 +60,7 @@
 <body>
     <header id="header">
         <div id="headerLeftDiv">
-            <div> <img src=""></div>
+            <div> <img src="img/id.png" id="userIcon"></div>
             <span id="headerLeftSpan"></span>
         </div>
 
