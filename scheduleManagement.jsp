@@ -13,7 +13,7 @@
     Cookie[] ck = request.getCookies();
     String sessionId="";
     String userName="";
-    String userR="";
+    String userR="teamMemer";
    // boolean logCheck = true;//로그인이 되었는지를 체그 하는 변수 
     if (ck != null) {//쿠키가 비여 있지 않을 경우
         for (Cookie cookies : ck) {
@@ -91,7 +91,7 @@
     </main>
   
     <script>
-        document.getElementById("headerLeftSpan").innerHTML= "<%=userRanks%>"  +  "<%=userName%>";
+        document.getElementById("headerLeftSpan").innerHTML= "<%=userName%>";
         var nowYear;//현재 년도 저장하는 변수
         var nowMonth;//현재 월을 저장하는 변수
         var boardList = <%=dataList%>;//jsp에 arrylist를 js 변수에 저장
@@ -139,6 +139,7 @@
             }
             //현재 년도와 날짜를 출력 해주는 함수
             yearDate();
+            visitTime();
         }
         //사용자가 새로운 글을 쓰기 위해 페이지 이동하는 함수 
         function newWriteEvent(){
@@ -191,7 +192,19 @@
                 document.getElementById("headerCenterDivDate").innerHTML= nowYear +"." + "0" + nowMonth;
             }
         }
-
+        //웹 페이지 방문시 시간을 가져 오는 함수 
+        function visitTime(){
+            var today = new Date();
+            var year = today.getFullYear();
+            var month =today.getMonth() + 1;
+            var day = today.getDate();
+            var hours =  today.getHours();
+            var minutes = today.getMinutes();
+            var seconds = today.getSeconds();
+            
+            console.log(year,month,day,hours,minutes,seconds)
+        }
+                
     </script>
 </body>
 </html>
