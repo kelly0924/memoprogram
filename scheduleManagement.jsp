@@ -13,6 +13,7 @@
     Cookie[] ck = request.getCookies();
     String sessionId="";
     String userName="";
+    String userR="";
    // boolean logCheck = true;//로그인이 되었는지를 체그 하는 변수 
     if (ck != null) {//쿠키가 비여 있지 않을 경우
         for (Cookie cookies : ck) {
@@ -21,6 +22,7 @@
             }
         }
         if(sessionId != null){//생성된 세션이 존재 한다는 뜻 생성된 세션이 존재 하면 
+            //userR(String)session.getAttribute("ranks");팀원인지 아닌지를 구분하고 싶어 하였는데 ??? 에로 가 난다? 왜??? 
             userName=(String)session.getAttribute("name");//사용자 이름을 가져 오겠다. 
         }
     }else if(sessionId== null){//???
@@ -67,9 +69,9 @@
         </div>
 
         <div id="headerCenter">
-            <div> <img src=""> </div>
-            <div> </div>
-            <div><img src=""></div>
+            <div> <img src="img/left.png" class="headerCenterIcon" onclick="yearDateLeftIconEvent()"> </div>
+            <div id="headerCenterDivDate"> </div>
+            <div><img src="img/right.png" class="headerCenterIcon" onclick="yearDaterighteIconEvent()" ></div>
         
         </div>
 
@@ -88,66 +90,108 @@
         
     </main>
   
-  <script>
-    document.getElementById("headerLeftSpan").innerHTML="<%=userName%>";
+    <script>
+        document.getElementById("headerLeftSpan").innerHTML= "<%=userRanks%>"  +  "<%=userName%>";
+        var nowYear;//현재 년도 저장하는 변수
+        var nowMonth;//현재 월을 저장하는 변수
+        var boardList = <%=dataList%>;//jsp에 arrylist를 js 변수에 저장
+        //userId를 출력 하는 부분
+        function moveBoardConentsEvent(memocnt){
+            var resultDiv=document.getElementById("main");
+            var newForm=document.createElement("form");
+            newForm.setAttribute("action","memoContents.jsp");
+            newForm.setAttribute("method","post");
+            resultDiv.appendChild(newForm);
+            var newInput=document.createElement("input");
+            newInput.setAttribute("type","hidden");
+            newInput.setAttribute("name","boardcount");
+            newInput.setAttribute("value",memocnt);
+            newForm.appendChild(newInput);
+            newForm.submit();
+        }
+        window.onload = function() {
+            var newMain=document. getElementById("main");//main을 가져온다.
+            var memoIndex;
+            var memoCount;//count 값을 저장 할 변수   
+            // 데이터 베이스에 있는 것을 보여 주기 
+            for(var index = 0; index<boardList.length; index++){
+                boardIndex=1;
+                var newDiv=document.createElement("div");
+                newDiv.setAttribute("class","mainDiv");
+                newDiv.setAttribute("id","mainDivMemo");
+                newMain.appendChild(newDiv);
 
-     var boardList = <%=dataList%>;//jsp에 arrylist를 js 변수에 저장
-            //userId를 출력 하는 부분
-            function moveBoardConentsEvent(memocnt){
-                var resultDiv=document.getElementById("main");
-                var newForm=document.createElement("form");
-                newForm.setAttribute("action","memoContents.jsp");
-                newForm.setAttribute("method","post");
-                resultDiv.appendChild(newForm);
-                var newInput=document.createElement("input");
-                newInput.setAttribute("type","hidden");
-                newInput.setAttribute("name","boardcount");
-                newInput.setAttribute("value",memocnt);
-                newForm.appendChild(newInput);
-                newForm.submit();
-            }
-            window.onload = function() {
-                var newMain=document. getElementById("main");//main을 가져온다.
-                var memoIndex;
-                var memoCount;//count 값을 저장 할 변수  
-                // 데이터 베이스에 있는 것을 보여 주기 
-                for(var index = 0; index<boardList.length; index++){
-                    boardIndex=1;
-                    var newDiv=document.createElement("div");
-                    newDiv.setAttribute("class","mainDiv");
-                    newDiv.setAttribute("id","mainDivMemo");
-                    newMain.appendChild(newDiv);
+                var newDivMemo=document.createElement("div");
+                newDivMemo.setAttribute("class","mainDivDate");
+                newDivMemo.setAttribute("id","mainDivMemoDate");
+                    newDivMemo.innerHTML=boardList[index][boardIndex];
+                newDiv.appendChild(newDivMemo);
+                boardIndex++;
 
-                    var newDivMemo=document.createElement("div");
-                    newDivMemo.setAttribute("class","mainDivDate");
-                    newDivMemo.setAttribute("id","mainDivMemoDate");
-                     newDivMemo.innerHTML=boardList[index][boardIndex];
-                    newDiv.appendChild(newDivMemo);
-                    boardIndex++;
+                var newSpan=document.createElement("span");
+                newSpan.setAttribute("class","mainDivSpan");
+                newSpan.setAttribute("id","mainDivMemoSpan");
+                newDiv.appendChild(newSpan);
+                newSpan.innerHTML=boardList[index][boardIndex];
+                memoCount=boardList[index][0]
+                newSpan.addEventListener("click", function(){moveBoardConentsEvent(memoCount)});//배열에 마지막 값만 넣어 진다. 그래서 
+                //내가 누른 tr에 count 가 아닌 데이터 베이스에 마지막 인덱스만 넘어 온다 -- > 어떻게 해결 ??
+            }
+            //현재 년도와 날짜를 출력 해주는 함수
+            yearDate();
+        }
+        //사용자가 새로운 글을 쓰기 위해 페이지 이동하는 함수 
+        function newWriteEvent(){
+            location.href="addMemoPagejsp";
+        }
+        //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
+        function logOutEvent(){
+            location.href="logOutModule.jsp";
+        }
+        function logInEvent(){
+            location.href="logPage.jsp";
+        }
+        console.log("<%=sessionId%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
 
-                    var newSpan=document.createElement("span");
-                    newSpan.setAttribute("class","mainDivSpan");
-                    newSpan.setAttribute("id","mainDivMemoSpan");
-                    newDiv.appendChild(newSpan);
-                    newSpan.innerHTML=boardList[index][boardIndex];
-                    memoCount=boardList[index][0]
-                    newSpan.addEventListener("click", function(){moveBoardConentsEvent(memoCount)});//배열에 마지막 값만 넣어 진다. 그래서 
-                    //내가 누른 tr에 count 가 아닌 데이터 베이스에 마지막 인덱스만 넘어 온다 -- > 어떻게 해결 ??
-                }
-    
+        //년 일 날짜가 나오기 
+        function yearDate(){
+            var today=new Date();
+            nowYear=today.getFullYear();
+            nowMonth=today.getMonth()+1;
+            document.getElementById("headerCenterDivDate").innerHTML= nowYear +"." + "0"+nowMonth;
+        }
+        //년 월 왼쪽 아이콘을 눌렀을 때 이벤트
+        function yearDateLeftIconEvent(){
+            
+            if(nowMonth == 1){//현재 1월일 경우 한번 이전으로 하면 전 년 12월이 된다.
+                nowYear=nowYear-1;
+                nowMonth=12;
+                printYearMonth(nowMonth);
+            }else{
+                nowMonth=nowMonth -1;
+                printYearMonth(nowMonth);
             }
-            //사용자가 새로운 글을 쓰기 위해 페이지 이동하는 함수 
-            function newWriteEvent(){
-                location.href="addMemoPagejsp";
+        }
+        //년 월 오른쪽 아이콘을 눌렀을 떼 일어나는 이벤트 
+        function yearDaterighteIconEvent(){
+            if(nowMonth == 12){
+                nowYear = nowYear + 1;
+                nowMonth = 1;
+                printYearMonth(nowMonth);
+            }else {
+                nowMonth = nowMonth + 1;
+                printYearMonth(nowMonth);
             }
-            //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
-            function logOutEvent(){
-                location.href="logOutModule.jsp";
+        }
+        //년 월을 포맷에 맞게 출력 해는 함수
+        function printYearMonth(nowMonth){//년 월을 출력만 해주는 합수 
+            if(nowMonth == 10 || nowMonth == 11 || nowMonth == 12){
+                document.getElementById("headerCenterDivDate").innerHTML= nowYear +"." + nowMonth;
+            }else{
+                document.getElementById("headerCenterDivDate").innerHTML= nowYear +"." + "0" + nowMonth;
             }
-            function logInEvent(){
-                location.href="logPage.jsp";
-            }
-            console.log("<%=sessionId%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
-  </script>
+        }
+
+    </script>
 </body>
 </html>
