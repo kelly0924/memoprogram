@@ -9,7 +9,7 @@
 
 <%
 
-          request.setCharacterEncoding("utf-8");
+    request.setCharacterEncoding("utf-8");
     Cookie[] ck = request.getCookies();
     String sessionId="";
     String userName="";
@@ -23,6 +23,8 @@
         if(sessionId != null){//생성된 세션이 존재 한다는 뜻 생성된 세션이 존재 하면 
             userName=(String)session.getAttribute("name");//사용자 이름을 가져 오겠다. 
         }
+    }else if(sessionId== null){//???
+        response.sendRedirect("logPage.jsp");
     }
    
     String count="";
@@ -72,8 +74,8 @@
         </div>
 
         <div>
-            <input type="button" value="추가">
-            <input type="button" value="로그아웃">
+            <input class="hedaderRightButton" id="addButton" type="button" value="추가">
+            <input class="hedaderRightButton" id="logOUtButton" type="button" value="로그아웃" onclick="logOutEvent()">
         </div>
 
     </header>
@@ -145,6 +147,7 @@
             function logInEvent(){
                 location.href="logPage.jsp";
             }
+            console.log("<%=sessionId%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
   </script>
 </body>
 </html>

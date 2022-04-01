@@ -8,6 +8,22 @@ body {
   align-items: center;
   height: 15%;
 }
+.hedaderRightButton {
+  font-size: 20px;
+  color: #e4e4e5;
+}
+#addButton {
+  width: 80px;
+  height: 40px;
+  background-color: #ea3323;
+  border: #ea3323;
+}
+#logOUtButton {
+  background-color: black;
+  border: 1px solid #8c8c8c;
+  width: 100px;
+  height: 40px;
+}
 .mainDiv {
   display: flex;
   justify-content: space-evenly;
@@ -16,20 +32,20 @@ body {
   border: 0.5px solid rgb(78, 78, 78);
 }
 .mainDivDate {
-  color: white;
+  color: #e4e4e5;
   font-size: 20px;
   font-weight: 700;
 }
 .mainDivSpan {
-  color: white;
+  color: #e4e4e5;
   font-size: 20px;
   font-weight: 700;
 }
 #headerLeftSpan {
-  color: white;
+  color: #e4e4e5;
   font-size: 20px;
   font-weight: 700;
 }
 #userIcon {
-  color: rgb(117, 114, 114);
+  color: #8c8c8c;
 }
