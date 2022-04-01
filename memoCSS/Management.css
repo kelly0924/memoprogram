@@ -44,6 +44,23 @@ body {
   height: 40px;
   font-weight: 600;
 }
+
+/* add button css  */
+
+#bodyDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #8c8c8c;
+  background-color: red;
+}
+#bodyDivForm {
+  width: 300px;
+  height: 200px;
+  background-color: beige;
+}
+
+/* main css */
 .mainDiv {
   display: flex;
   justify-content: space-evenly;

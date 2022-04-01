@@ -82,6 +82,19 @@
 
     </header>
 
+    <div id="bodyDiv">
+        <form id="bodyDivForm">
+            <div>
+                <input type="date">
+                <input type="time">
+            </div>
+            <div>
+                <input type="textarea" value="input your memo">
+                <input type="submit" value="저장">
+            </div>
+        </form>
+    </div>
+
     <main id="main">
         <%-- <div>
             <div></div>
