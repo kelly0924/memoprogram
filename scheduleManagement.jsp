@@ -162,6 +162,17 @@
                 newSpan.setAttribute("id","mainDivMemoSpan");
                 newDiv.appendChild(newSpan);
                 newSpan.innerHTML=boardList[index][boardIndex];
+                
+                var newImgDelete=document.createElement("img");
+                newImgDelete.setAttribute("src","img/deletImg.png");
+                newImgDelete.setAttribute("id","deletImg");
+                newDiv.appendChild(newImgDelete);
+
+                var newImgModifiy=document.createElement("img");
+                newImgModifiy.setAttribute("src","img/modifiy.png");
+                newImgModifiy.setAttribute("id","modifiyImg");
+                newDiv.appendChild(newImgModifiy);
+
                 memoCount=boardList[index][0]
                 newSpan.addEventListener("click", function(){moveBoardConentsEvent(memoCount)});//배열에 마지막 값만 넣어 진다. 그래서 
                 //내가 누른 tr에 count 가 아닌 데이터 베이스에 마지막 인덱스만 넘어 온다 -- > 어떻게 해결 ??
