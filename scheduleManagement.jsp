@@ -76,26 +76,42 @@
         </div>
 
         <div>
-            <input class="hedaderRightButton" id="addButton" type="button" value="추가">
+            <input class="hedaderRightButton" id="addButton" type="button" value="추가" onclick="addMemoEvent()">
             <input class="hedaderRightButton" id="logOUtButton" type="button" value="로그아웃" onclick="logOutEvent()">
         </div>
 
     </header>
 
-    <div id="bodyDiv">
+    <%-- <div id="bodyDiv">
         <form id="bodyDivForm">
             <div>
                 <input type="date">
                 <input type="time">
             </div>
             <div>
-                <input type="textarea" value="input your memo">
-                <input type="submit" value="저장">
+               <input type="text" id="inputText">
+            </div>
+            <div> 
+                <input type="submit" value="저장" id="saveButton">
             </div>
         </form>
-    </div>
+    </div> --%>
 
     <main id="main">
+        <div id="bodyDiv">
+            <form id="bodyDivForm" action="memoAddPage.jsp" method="post">
+                <div>
+                    <input type="date" name="selectDate">
+                    <input type="time" name="selectTime">
+                </div>
+                <div>
+                <input type="text" id="inputText" name="userInptMemo">
+                </div>
+                <div> 
+                    <input type="submit" value="저장" id="saveButton">
+                </div>
+            </form>
+        </div>
         <%-- <div>
             <div></div>
             <span>memo 내용</span>
@@ -216,6 +232,17 @@
             var seconds = today.getSeconds();
             
             console.log(year,month,day,hours,minutes,seconds)
+        }
+
+        //추가 버튼 눌렀을 때 호출 되는 이벤트 
+        function addMemoEvent(){
+            var tmpDiv=document.getElementById("bodyDiv");
+            if(tmpDiv.style.display=='none'){
+               tmpDiv.style.display = 'block';
+            }else{
+		        tmpDiv.style.display = 'none';
+	        }
+            console.log("호출")
         }
                 
     </script>
