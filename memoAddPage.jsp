@@ -33,13 +33,13 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect =DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduleDB", "schedule","1234");//데이터 베이스 계정 아이디, 데이터베이스 계정 비밀번호
     String sql="INSERT INTO  memo( userId,memoContents,memoWriteDate) VALUES (?,?,?)";
-    PreparedStatement query=connect.prepareStatement(sql);
-    query.setString(1,reUserId);
-    query.setString(2,reMemoContents);
-    query.setString(3,totolTime);
-    query.executeUpdate();
-    response.sendRedirect("scheduleManagment.jsp");
-    
+   // PreparedStatement query=connect.prepareStatement(sql);
+   // query.setString(1,reUserId);
+   // query.setString(2,reMemoContents);
+   // query.setString(3,totolTime);
+   // query.executeUpdate();
+    response.sendRedirect("scheduleManagement.jsp");
+   
 %>
 
 <script>
