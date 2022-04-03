@@ -40,6 +40,7 @@
     String sql="SELECT *FROM memo";
     PreparedStatement query=connect.prepareStatement(sql);
     ResultSet result=query.executeQuery();
+    
     while(result.next()){
        ArrayList<String> data=new ArrayList<String>();
        data.add("'" + Integer.toString(result.getInt(1)) + "'");
@@ -98,6 +99,7 @@
     </div> --%>
 
     <main id="main">
+      <%-- 메모를 추가 하기 추가 버튼 눌렀을때 생기는 돔  --%>
         <div id="bodyDiv">
             <form id="bodyDivForm" action="memoAddPage.jsp" method="post">
                 <div>
@@ -112,10 +114,21 @@
                 </div>
             </form>
         </div>
-        <%-- <div>
-            <div></div>
-            <span>memo 내용</span>
-        <div> --%>
+        <%-- 메모를 수정 하기 위한 창이 뜨게 하는 것이다. --%>
+        <div id="mainModifyDiv">
+           <form id="mainModifyDivForm" action="modifyPage.jsp" method="post">
+                 <div>
+                    <input type="date" name="selectDate">
+                    <input type="time" name="selectTime">
+                </div>
+                <div>
+                <input type="text" id="inputText" name="userInptMemo">
+                </div>
+                <div> 
+                    <input type="submit" value="저장" id="saveButton">
+                </div>
+            </form>
+        <div>
         
     </main>
   
@@ -124,6 +137,7 @@
         var nowYear;//현재 년도 저장하는 변수
         var nowMonth;//현재 월을 저장하는 변수
         var boardList = <%=dataList%>;//jsp에 arrylist를 js 변수에 저장
+        var tagDistinguish=0;
 
         window.onload = function() {
             var newMain=document. getElementById("main");//main을 가져온다.
@@ -132,47 +146,49 @@
             // 데이터 베이스에 있는 것을 보여 주기 
             for(var index = 0; index<boardList.length; index++){
                 boardIndex=1;
+                var tmpDistinguishTagId=tagDistinguish.toString();//각 다른 id 이름을 지정해주기 위해 숫자를 문자로 바꿔서 구분 지우려고 한다.
                 var newDiv=document.createElement("div");
                 newDiv.setAttribute("class","mainDiv");
-                newDiv.setAttribute("id","mainDivMemo");
+                newDiv.setAttribute("id","mainDivMemo"+tmpDistinguishTagId);
                 newMain.appendChild(newDiv);
 
                 var newDivMemo=document.createElement("div");
                 newDivMemo.setAttribute("class","mainDivDate");
-                newDivMemo.setAttribute("id","mainDivMemoDate");
+                newDivMemo.setAttribute("id","mainDivMemoDate"+tmpDistinguishTagId);
                 newDivMemo.innerHTML=boardList[index][boardIndex];
                 newDiv.appendChild(newDivMemo);
                 boardIndex++;
 
                 var newSpan=document.createElement("span");
                 newSpan.setAttribute("class","mainDivSpan");
-                newSpan.setAttribute("id","mainDivMemoSpan");
+                newSpan.setAttribute("id","mainDivMemoSpan" + tmpDistinguishTagId);
                 newDiv.appendChild(newSpan);
                 newSpan.innerHTML=boardList[index][boardIndex];
                 
                 var newImgDelete=document.createElement("img");
                 newImgDelete.setAttribute("src","img/deletImg.png");
-                newImgDelete.setAttribute("id","deletImg");
+                newImgDelete.setAttribute("id",tmpDistinguishTagId);
                 newDiv.appendChild(newImgDelete);
 
-                var newImgModifiy=document.createElement("img");
-                newImgModifiy.setAttribute("src","img/modifiy.png");
-                newImgModifiy.setAttribute("id","modifiyImg");
-                newDiv.appendChild(newImgModifiy);
-                newImgModifiy.addEventListener("click", modifiyEvent);//배열에 마지막 값만 넣어 진다. 그래서 
+                var newImgModify=document.createElement("img");
+                newImgModify.setAttribute("src","img/modifiy.png");
+                newImgModify.setAttribute("id",tmpDistinguishTagId);
+                newDiv.appendChild(newImgModify);
+                newImgModify.addEventListener("click", function(){modifyEvent(this.id)});//배열에 마지막 값만 넣어 진다. 그래서 
                 //내가 누른 tr에 count 가 아닌 데이터 베이스에 마지막 인덱스만 넘어 온다 -- > 어떻게 해결 ??
+                tagDistinguish++;//아이디가 겹치지 않게 하기
             }
             //현재 년도와 날짜를 출력 해주는 함수
             yearDate();
             visitTime();
         }
 
-        function modifiyEvent(){//수정 함수  수정을 그자리에서 일어 나게 하기
-         console.log("호출")
-         var tmpSpan=document.getElementById("mainDivMemoSpan");
-         var tmpSpanValuel=document.getElementById("mainDivMemoSpan").innerHTML;
-         console.log(tmpSpanValuel)
-        //  tmpSpan.style.display="none";
+        function modifyEvent(a){//수정 함수  수정을 그자리에서 일어 나게 하기
+         console.log(a)
+         var tmpSpan=document.getElementById("mainDivMemoSpan" + a).innerHTML;
+         console.log(tmpSpan.innerHTML)
+        
+        
 
         }
 
