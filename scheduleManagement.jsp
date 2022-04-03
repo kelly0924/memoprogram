@@ -124,20 +124,7 @@
         var nowYear;//현재 년도 저장하는 변수
         var nowMonth;//현재 월을 저장하는 변수
         var boardList = <%=dataList%>;//jsp에 arrylist를 js 변수에 저장
-        //userId를 출력 하는 부분
-        function moveBoardConentsEvent(memocnt){
-            var resultDiv=document.getElementById("main");
-            var newForm=document.createElement("form");
-            newForm.setAttribute("action","memoContents.jsp");
-            newForm.setAttribute("method","post");
-            resultDiv.appendChild(newForm);
-            var newInput=document.createElement("input");
-            newInput.setAttribute("type","hidden");
-            newInput.setAttribute("name","boardcount");
-            newInput.setAttribute("value",memocnt);
-            newForm.appendChild(newInput);
-            newForm.submit();
-        }
+
         window.onload = function() {
             var newMain=document. getElementById("main");//main을 가져온다.
             var memoIndex;
@@ -153,7 +140,7 @@
                 var newDivMemo=document.createElement("div");
                 newDivMemo.setAttribute("class","mainDivDate");
                 newDivMemo.setAttribute("id","mainDivMemoDate");
-                    newDivMemo.innerHTML=boardList[index][boardIndex];
+                newDivMemo.innerHTML=boardList[index][boardIndex];
                 newDiv.appendChild(newDivMemo);
                 boardIndex++;
 
@@ -172,19 +159,23 @@
                 newImgModifiy.setAttribute("src","img/modifiy.png");
                 newImgModifiy.setAttribute("id","modifiyImg");
                 newDiv.appendChild(newImgModifiy);
-
-                memoCount=boardList[index][0]
-                newSpan.addEventListener("click", function(){moveBoardConentsEvent(memoCount)});//배열에 마지막 값만 넣어 진다. 그래서 
+                newImgModifiy.addEventListener("click", modifiyEvent);//배열에 마지막 값만 넣어 진다. 그래서 
                 //내가 누른 tr에 count 가 아닌 데이터 베이스에 마지막 인덱스만 넘어 온다 -- > 어떻게 해결 ??
             }
             //현재 년도와 날짜를 출력 해주는 함수
             yearDate();
             visitTime();
         }
-        //사용자가 새로운 글을 쓰기 위해 페이지 이동하는 함수 
-        function newWriteEvent(){
-            location.href="addMemoPagejsp";
+
+        function modifiyEvent(){//수정 함수  수정을 그자리에서 일어 나게 하기
+         console.log("호출")
+         var tmpSpan=document.getElementById("mainDivMemoSpan");
+         var tmpSpanValuel=document.getElementById("mainDivMemoSpan").innerHTML;
+         console.log(tmpSpanValuel)
+        //  tmpSpan.style.display="none";
+
         }
+
         //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
         function logOutEvent(){
             location.href="logOutModule.jsp";
