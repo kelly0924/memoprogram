@@ -45,6 +45,16 @@ body {
   font-weight: 600;
 }
 
+/* 저장 수정을 감싸고 있는 div */
+#mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#mainList {
+  background-color: red;
+}
 /* add button css  */
 /* 저장  css  */
 #bodyDiv {
@@ -90,8 +100,8 @@ body {
 
 /* main css */
 #main {
-  z-index: -1;
-  background-color: red;
+  /* position: relative; */
+  min-height: 100%;
 }
 .mainDiv {
   display: flex;
@@ -99,6 +109,7 @@ body {
   align-items: center;
   height: 40px;
   border: 0.5px solid rgb(78, 78, 78);
+  /* position: relative; */
 }
 .mainDivDate {
   color: #e4e4e5;

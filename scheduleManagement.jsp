@@ -83,52 +83,41 @@
 
     </header>
 
-    <%-- <div id="bodyDiv">
-        <form id="bodyDivForm">
-            <div>
-                <input type="date">
-                <input type="time">
-            </div>
-            <div>
-               <input type="text" id="inputText">
-            </div>
-            <div> 
-                <input type="submit" value="저장" id="saveButton">
-            </div>
-        </form>
-    </div> --%>
-
     <main id="main">
       <%-- 메모를 추가 하기 추가 버튼 눌렀을때 생기는 돔  --%>
-        <div id="bodyDiv">
-            <form id="bodyDivForm" action="memoAddPage.jsp" method="post">
-                <div>
-                    <input type="date" name="selectDate">
-                    <input type="time" name="selectTime">
-                </div>
-                <div>
-                <input type="text" id="inputText" name="userInptMemo">
-                </div>
-                <div> 
-                    <input type="submit" value="저장" id="saveButton">
-                </div>
-            </form>
+        <div id="mainContainer"> 
+            <div id="bodyDiv">
+                <form id="bodyDivForm" action="memoAddPage.jsp" method="post">
+                    <div>
+                        <input type="date" name="selectDate">
+                        <input type="time" name="selectTime">
+                    </div>
+                    <div>
+                    <input type="text" id="inputText" name="userInptMemo">
+                    </div>
+                    <div> 
+                        <input type="submit" value="저장" id="saveButton">
+                    </div>
+                </form>
+            </div>
+            <%-- 메모를 수정 하기 위한 창이 뜨게 하는 것이다. --%>
+            <div id="mainModifyDiv">
+                <form id="bodyDivForm" action="modifyPage.jsp" method="post">
+                    <div>
+                        <input type="text" id="modifyDate" name="modiDate">
+                    </div>
+                    <div>
+                    <input type="text" id="modifyMemo" name="modiMemo">
+                    </div>
+                    <div> 
+                        <input type="submit" value="수정" id="saveButton">
+                    </div>
+                </form>
+            <div>
         </div>
-        <%-- 메모를 수정 하기 위한 창이 뜨게 하는 것이다. --%>
-        <div id="mainModifyDiv">
-           <form id="bodyDivForm" action="modifyPage.jsp" method="post">
-                <div>
-                    <input type="text" id="modifyDate" name="modiDate">
-                </div>
-                <div>
-                <input type="text" id="modifyMemo" name="modiMemo">
-                </div>
-                <div> 
-                    <input type="submit" value="수정" id="saveButton">
-                </div>
-            </form>
-        <div>
-        
+
+        <div id="mainList"></div>
+
     </main>
   
     <script>
@@ -139,7 +128,8 @@
         var tagDistinguish=0;
 
         window.onload = function() {
-            var newMain=document. getElementById("main");//main을 가져온다.
+            var newMain=document.getElementById("main");//main을 가져온다.
+            //var newList=document.getElementById("mainList");?? 여기에 자식으로 추가 하면 왜 안되지??
             var memoIndex;
             var memoCount;//count 값을 저장 할 변수   
             // 데이터 베이스에 있는 것을 보여 주기 
@@ -186,7 +176,7 @@
         function modifyEvent(index){
          console.log(index)
          var tmpDiv=document.getElementById("mainModifyDiv");
-            if(tmpDiv.style.display=='none'){
+            if(window.getComputedStyle(tmpDiv).display=='none'){
                tmpDiv.style.display = 'block';
             }else{
 		        tmpDiv.style.display = 'none';
@@ -219,16 +209,6 @@
             
             
         }
-
-        //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
-        function logOutEvent(){
-            location.href="logOutModule.jsp";
-        }
-        function logInEvent(){
-            location.href="logPage.jsp";
-        }
-        console.log("<%=sessionId%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
-
         //년 일 날짜가 나오기 
         function yearDate(){
             var today=new Date();
@@ -283,13 +263,20 @@
         //추가 버튼 눌렀을 때 호출 되는 이벤트 
         function addMemoEvent(){
             var tmpDiv=document.getElementById("bodyDiv");
-            if(tmpDiv.style.display=='none'){
+            if(window.getComputedStyle(tmpDiv).display=='none'){//window.getComputedStyle() 함수는 외부 css를 가져 올 것이다. 
                tmpDiv.style.display = 'block';
             }else{
 		        tmpDiv.style.display = 'none';
 	        }
             console.log("호출")
         }
+
+         //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
+        function logOutEvent(){
+            location.href="logOutModule.jsp";
+        }
+        console.log("<%=sessionId%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
+
                 
     </script>
 </body>
