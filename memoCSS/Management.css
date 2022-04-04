@@ -46,7 +46,7 @@ body {
 }
 
 /* add button css  */
-
+/* 저장  css  */
 #bodyDiv {
   display: flex;
   justify-content: center;
@@ -79,6 +79,15 @@ body {
   border: #ea3323;
   font-weight: 600;
 }
+
+/* modify CSS */
+#mainModifyDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
 /* main css */
 #main {
   z-index: -1;

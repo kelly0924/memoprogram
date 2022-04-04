@@ -116,16 +116,15 @@
         </div>
         <%-- 메모를 수정 하기 위한 창이 뜨게 하는 것이다. --%>
         <div id="mainModifyDiv">
-           <form id="mainModifyDivForm" action="modifyPage.jsp" method="post">
-                 <div>
-                    <input type="date" name="selectDate">
-                    <input type="time" name="selectTime">
+           <form id="bodyDivForm" action="modifyPage.jsp" method="post">
+                <div>
+                    <input type="text" id="modifyDate" name="modiDate">
                 </div>
                 <div>
-                <input type="text" id="inputText" name="userInptMemo">
+                <input type="text" id="modifyMemo" name="modiMemo">
                 </div>
                 <div> 
-                    <input type="submit" value="저장" id="saveButton">
+                    <input type="submit" value="수정" id="saveButton">
                 </div>
             </form>
         <div>
@@ -169,6 +168,7 @@
                 newImgDelete.setAttribute("src","img/deletImg.png");
                 newImgDelete.setAttribute("id",tmpDistinguishTagId);
                 newDiv.appendChild(newImgDelete);
+                newImgDelete.addEventListener("click", function(){deletEvent(this.id)});
 
                 var newImgModify=document.createElement("img");
                 newImgModify.setAttribute("src","img/modifiy.png");
@@ -182,14 +182,42 @@
             yearDate();
             visitTime();
         }
+        //수정 함수  수정을 그자리에서 일어 나게 하기
+        function modifyEvent(index){
+         console.log(index)
+         var tmpDiv=document.getElementById("mainModifyDiv");
+            if(tmpDiv.style.display=='none'){
+               tmpDiv.style.display = 'block';
+            }else{
+		        tmpDiv.style.display = 'none';
+	        }
+         var tmpDate=document.getElementById("mainDivMemoDate" + index);
+         var tmpSpan=document.getElementById("mainDivMemoSpan" + index);
+         console.log(tmpSpan.innerHTML ,tmpDate.innerHTML)
+         document.getElementById("modifyDate").value=tmpDate.innerHTML;
+         document.getElementById("modifyMemo").value=tmpSpan.innerHTML;
+         //css 하기
 
-        function modifyEvent(a){//수정 함수  수정을 그자리에서 일어 나게 하기
-         console.log(a)
-         var tmpSpan=document.getElementById("mainDivMemoSpan" + a).innerHTML;
-         console.log(tmpSpan.innerHTML)
-        
-        
+        }
 
+        //삭제 이벤트 
+        function deletEvent(index){
+            console.log(index)
+            var tmpDate=document.getElementById("mainDivMemoDate" + index);
+            var reusltMain=document.getElementById("main");
+            var newForm=document.createElement("form");
+            newForm.setAttribute("action","deletMemoModule.jsp");
+            newForm.setAttribute("method","post");
+            reusltMain.appendChild(newForm);
+            var newInput=document.createElement("input");
+            newInput.setAttribute("type","hidden");
+            newInput.setAttribute("name","delet");
+            newInput.setAttribute("value",tmpDate.innerHTML);
+            newForm.appendChild(newInput);
+            newForm.submit();
+
+            
+            
         }
 
         //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
