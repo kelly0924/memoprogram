@@ -1,4 +1,38 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
+<%@ page import="java.sql.Connection"%>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.util.*"%>
+
+<%
+    request.setCharacterEncoding("utf-8");
+    String sessionId="";
+    ArrayList<String> ranksList =new ArrayList<String>();
+    ArrayList<String> departmentList=new ArrayList<String>();
+        //DB 연결
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect =DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduleDB", "schedule","1234");//데이터 베이스 계정 아이디, 데이터베이스 계정 비밀번호
+    String sql="SELECT * FROM user WHERE userId=? and userPw=?";
+    PreparedStatement query =connect.prepareStatement(sql);
+    ResultSet result=query.executeQuery();//데이터 베이스에 값을 불러와서 저장 하기 
+    while(result.next()){
+        
+    }
+    //세션 처리
+    //session.setAttribute("pw", pw);
+    //session.setAttribute("id", id);
+    //session.setAttribute("name",resultName);//사용자에 이름도 세션에 포함 시킨다.
+    //session.setAttribute("ranks",userRanks);//팀원인지 팀장인지 를 구분하기 위해서 세션도 같이 새성 해주기
+    ////생성한 세션에서 사용자 id, pw 가져오기
+    //sessionId = session.getId();//생성된 세션 id를 가져온다. 
+    ////세션 값을 쿠키에 넣어서 주기 쿠키 생성
+    //Cookie c = new Cookie("cookid", sessionId);
+    //response.addCookie(c);
+    //response.sendRedirect("scheduleManagement.jsp");
+
+%>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
