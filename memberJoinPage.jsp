@@ -7,29 +7,30 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-    String sessionId="";
     ArrayList<String> ranksList =new ArrayList<String>();
     ArrayList<String> departmentList=new ArrayList<String>();
-        //DB 연결
+    //DB 연결
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect =DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduleDB", "schedule","1234");//데이터 베이스 계정 아이디, 데이터베이스 계정 비밀번호
-    String sql="SELECT * FROM user WHERE userId=? and userPw=?";
-    PreparedStatement query =connect.prepareStatement(sql);
-    ResultSet result=query.executeQuery();//데이터 베이스에 값을 불러와서 저장 하기 
+    
+    String sql="SELECT *FROM department";
+    PreparedStatement query=connect.prepareStatement(sql);
+    ResultSet result=query.executeQuery();
+    
     while(result.next()){
-        
+        departmentList.add("'" + result.getString(2) + "'");
+
     }
-    //세션 처리
-    //session.setAttribute("pw", pw);
-    //session.setAttribute("id", id);
-    //session.setAttribute("name",resultName);//사용자에 이름도 세션에 포함 시킨다.
-    //session.setAttribute("ranks",userRanks);//팀원인지 팀장인지 를 구분하기 위해서 세션도 같이 새성 해주기
-    ////생성한 세션에서 사용자 id, pw 가져오기
-    //sessionId = session.getId();//생성된 세션 id를 가져온다. 
-    ////세션 값을 쿠키에 넣어서 주기 쿠키 생성
-    //Cookie c = new Cookie("cookid", sessionId);
-    //response.addCookie(c);
-    //response.sendRedirect("scheduleManagement.jsp");
+    
+    String sql2="SELECT *FROM ranks";
+    PreparedStatement query2 =connect.prepareStatement(sql2);
+    ResultSet result2=query2.executeQuery();//데이터 베이스에 값을 불러와서 저장 하기 
+
+    while(result2.next()){
+        ranksList.add( "'" + result2.getString(2) + "'");
+       
+    }
+    
 
 %>
 
@@ -42,7 +43,7 @@
     <title>memberJoinPage</title>
 </head>
 <body>
-    <form action="memberJoinModule.jsp" method="post">
+    <form action="memberJoinModule.jsp" method="post" id="fromTag">
         <span>이름<span>
         <div class="formDiv">
             <input class="fromDivText"  type="text" name="userName" >
@@ -51,20 +52,20 @@
        <span>부서<span>
         <div class="formDiv">
             <select name="Departments" class="fromDivSelect">
-                <option value="">선택</option>
-                <option value="Accounting">Accounting</option>
-                <option value="Development">Development</option>
-                <option value="Education">Education</option>
+                <option> </option>
+                <option id="Accounting"></option>
+                <option id="Development"></option>
+                <option id="Education"></option>
             </select>
         </div>
         
         <span>직급<span>
         <div class="formDiv">
             <select name="ranks" class="fromDivSelect">
-                <option value="">선택</option>
-                <option value="CEO">CEO</option>
-                <option value="TeamLeader">TeamLeader</option>
-                <option value="Teammember">Teammember</option>
+                <option> </option>
+                <option id="CEO"></option>
+                <option id="TeamLeader"></option>
+                <option id="Teammember"></option>
             </select>
         </div>
 
@@ -87,21 +88,33 @@
         </div>
 
         <div class="formDiv"> 
-            <input id="fromDivSubmit" type="submit" value="회원가입">
+            <input id="fromDivSubmit" type="button" value="회원가입" onclick="memberJoinButtonEvent()">
         </div>
     </form>
 
     <script>
-
+        var jsDepartList=<%=departmentList%>
+        var jsRanksList=<%=ranksList%>
+        var idCheckEventCall=false;//중복 코드가 눌렸는지 아닌지를 확인 하기 위한 변수 
+        //부서를 데이테 베이스에서 불러 와서 넣어 html에 넣어 주는 것
+        document.getElementById("Accounting").innerHTML=jsDepartList[0];
+        document.getElementById("Development").innerHTML=jsDepartList[1];
+        document.getElementById("Education").innerHTML=jsDepartList[2];
+        //직급을 데이터 베이스에서 불러와서 넣어 주는 과정
+        document.getElementById("CEO").innerHTML=jsDepartList[0];
+        document.getElementById("TeamLeader").innerHTML=jsDepartList[1];
+        document.getElementById("Teammember").innerHTML=jsDepartList[2];
+       
+       //id 중복 체크 이벤트 
         function  idCheckEvent() {
+            idCheckEventCall=true;
             var userId=document.getElementById("fromDivId").value;//중복체크 버튼 클릭시 넘어 오는 사용자 id 값
             url = "checkId.jsp?userid="+userId;
             window.name="parentWindow"
             window.open(url,"newWindow","height=200,width=400");//맥에서는 싸파리에서만 가능함 이유는 그냥 지원 하지 않느다고 함
+            //아이디 입력 란을 비활성화 해서 중복체크 한후 다시 입력이 불가 하게 할것이다.
+            document.getElementById("fromDivId").style.disabled="disabled";
         }
-        //비밀 번호 확인 하기 
-        //  var pwObj=document.getElementById("fromDivPw");
-        //  pwObj.addEventListener("onchange",pwEvent);
          
         function pwEvent(){
             var pw=document.getElementById("fromDivPw").value;
@@ -135,6 +148,17 @@
             }
         }
 
+        //회원 가입 버튼을 눌렀을때 일어 나는 이벤트 
+        function memberJoinButtonEvent(){
+            //만약 아이디 중복 체크가 쿨릭 됬다면 submit 해서 가입 페이지로 넘어 가기 
+            if(idCheckEventCall == true){
+                document.getElementById("fromTag").submit();
+            }else{
+                alert("중복체크를 하지 않았습니다.")
+            }
+
+        }
+         console.log("<%=ranksList%>")
 
     </script>
 </body>

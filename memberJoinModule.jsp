@@ -23,12 +23,12 @@
     }else{
        String sql="INSERT INTO user(userId,userName,userPw,userDepartment,userRank) VALUES(?,?,?,?,?)";
        PreparedStatement query =connect.prepareStatement(sql);
-       query.setString(1,id);
-       query.setString(2,name);
-       query.setString(3,usPw);    
-       query.setString(4,department);
-       query.setString(5,ranks);
-       query.executeUpdate();
+       //query.setString(1,id);
+       //query.setString(2,name);
+       //query.setString(3,usPw);    
+       //query.setString(4,department);
+       //query.setString(5,ranks);
+       //query.executeUpdate();
         //세션 생성 한다. 
         //session.setAttribute("id", id);
 		//session.setAttribute("pw", usPw);
@@ -43,20 +43,12 @@
    
 %>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body>
-    <script>
-      if(<%=inputCheck%> == true){
-          alert("정보를 모두 입력 하세요");
-          location.href="memberJoinPage.jsp";
-        }
-    </script>
 
-</body>
-</html>
+<script>
+    // if(<%=inputCheck%> == true){
+    //     alert("정보를 모두 입력 하세요");
+    //     location.href="memberJoinPage.jsp";
+    // }
+    console.log("<%=department%>")
+</script>
+
