@@ -30,12 +30,18 @@ body {
 }
 
 /* header righte */
+#headerRightDiv {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
 #addButton {
   width: 80px;
   height: 40px;
   background-color: #ea3323;
   border: #ea3323;
   font-weight: 600;
+  margin-left: 10px;
 }
 #logOUtButton {
   background-color: black;
@@ -43,13 +49,26 @@ body {
   width: 100px;
   height: 40px;
   font-weight: 600;
+  margin-left: 10px;
 }
-
+#managmentButton {
+  background-color: black;
+  border: 1px solid #8c8c8c;
+  width: 100px;
+  height: 40px;
+  font-weight: 600;
+  margin-left: 10px;
+}
 /* 저장 수정을 감싸고 있는 div */
 #mainContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 30%;
+  left: 35%;
+  /* box-shadow: rgba(85, 84, 84, 0.5) 0 0 0 9999px;
+  z-index: 100; */
 }
 
 #mainList {

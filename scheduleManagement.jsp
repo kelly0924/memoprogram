@@ -92,17 +92,17 @@
         
         </div>
 
-        <div>
+        <div id="headerRightDiv">
             <input class="hedaderRightButton" id="addButton" type="button" value="추가" onclick="addMemoEvent()">
-            <input class="hedaderRightButton" id="managmentButton" type="button" value="추가" onclick="">
+            <input class="hedaderRightButton" id="managmentButton" type="button" value="관리자" onclick="">
             <input class="hedaderRightButton" id="logOUtButton" type="button" value="로그아웃" onclick="logOutEvent()">
         </div>
 
     </header>
-
+    
     <main id="main">
       <%-- 메모를 추가 하기 추가 버튼 눌렀을때 생기는 돔  --%>
-        <div id="mainContainer"> 
+         <div id="mainContainer"> 
             <div id="bodyDiv">
                 <form id="bodyDivForm" action="memoAddPage.jsp" method="post">
                     <div>
@@ -286,8 +286,13 @@
             var tmpDiv=document.getElementById("bodyDiv");
             if(window.getComputedStyle(tmpDiv).display=='none'){//window.getComputedStyle() 함수는 외부 css를 가져 올 것이다. 
                tmpDiv.style.display = 'block';
+               var mc=document.getElementById("mainContainer");
+             console.log(1)
+            //    window.getComputedStyle(mc).box-shadow=" rgba(85, 84, 84, 0.5) 0 0 0 9999px"
             }else{
 		        tmpDiv.style.display = 'none';
+                //  document.getElementById("mainContainer").style.box-shadow="none";
+                console.log(2)
 	        }
             console.log("호출")
         }
@@ -295,7 +300,7 @@
         //관리자 버튼을 만들지 없앨지 결정 하는함수 
         function managemenButtonDisplay(){
             var managemenButtonDiv=document.getElementById("managmentButton");
-            if("<%=resultRrank%>" == "TeamLeader"){
+            if("<%=resultRrank%>" == "TeamLeader" ||"<%=resultRrank%>" == "CEO" ){
                 managemenButtonDiv.style.display="block";
             }else if("<%=resultRrank%>" == "TeamMember"){
                 managemenButtonDiv.style.display="none";
