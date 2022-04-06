@@ -88,6 +88,7 @@
         </div>
 
         <div class="formDiv"> 
+            <input id="DateTime" type="hidden" name="usDate">
             <input id="fromDivSubmit" type="button" value="회원가입" onclick="memberJoinButtonEvent()">
         </div>
     </form>
@@ -101,9 +102,9 @@
         document.getElementById("Development").innerHTML=jsDepartList[1];
         document.getElementById("Education").innerHTML=jsDepartList[2];
         //직급을 데이터 베이스에서 불러와서 넣어 주는 과정
-        document.getElementById("CEO").innerHTML=jsDepartList[0];
-        document.getElementById("TeamLeader").innerHTML=jsDepartList[1];
-        document.getElementById("Teammember").innerHTML=jsDepartList[2];
+        document.getElementById("CEO").innerHTML=jsRanksList[0];
+        document.getElementById("TeamLeader").innerHTML=jsRanksList[1];
+        document.getElementById("Teammember").innerHTML=jsRanksList[2];
        
        //id 중복 체크 이벤트 
         function  idCheckEvent() {
@@ -152,6 +153,17 @@
         function memberJoinButtonEvent(){
             //만약 아이디 중복 체크가 쿨릭 됬다면 submit 해서 가입 페이지로 넘어 가기 
             if(idCheckEventCall == true){
+                var today = new Date();
+                var year = today.getFullYear();
+                var month = ('0' + (today.getMonth() + 1)).slice(-2);
+                var day = ('0' + today.getDate()).slice(-2);
+                var dateString = year + '-' + month  + '-' + day;
+                var hours = ('0' + today.getHours()).slice(-2); 
+                var minutes = ('0' + today.getMinutes()).slice(-2);
+                var seconds = ('0' + today.getSeconds()).slice(-2); 
+                var timeString = hours + ':' + minutes  + ':' + seconds;
+                var totolTime=dateString + " " + timeString;
+                document.getElementById("DateTime").value=totolTime;
                 document.getElementById("fromTag").submit();
             }else{
                 alert("중복체크를 하지 않았습니다.")

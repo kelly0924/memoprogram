@@ -32,7 +32,8 @@
             userName=(String)session.getAttribute("name");//사용자 이름을 가져 오겠다. 
             userRank=(String)session.getAttribute("ranks");//사용자 이름을 가져 오겠다. 
         }
-    }else if(sessionId== null){//???
+    }
+    if(userName.equals("")){//???
         response.sendRedirect("logPage.jsp");
     }
    
