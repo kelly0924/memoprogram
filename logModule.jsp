@@ -21,7 +21,7 @@
         //DB 연결
         Class.forName("com.mysql.jdbc.Driver");
         Connection connect =DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduleDB", "schedule","1234");//데이터 베이스 계정 아이디, 데이터베이스 계정 비밀번호
-        String sql="SELECT * FROM user WHERE userId=? and userPw=?";
+        String sql="SELECT * FROM userImpormation  WHERE userId=? and userPw=?";
         PreparedStatement query =connect.prepareStatement(sql);
         query.setString(1,id);
         query.setString(2,pw);

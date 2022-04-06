@@ -13,7 +13,13 @@
     Cookie[] ck = request.getCookies();
     String sessionId="";
     String userName="";
-    String userR="teamMemer";
+    String userRank="";//사용자의 직급을 저장 하는 변수 
+
+    String count="";
+    String writeDate="";
+    String memo="";
+    String resultRrank="";//사용자의 직급을 데이터 베이스에 불러와서 저장 하는 변수
+    ArrayList<ArrayList<String>> dataList = new ArrayList<ArrayList<String>> ();
    // boolean logCheck = true;//로그인이 되었는지를 체그 하는 변수 
     if (ck != null) {//쿠키가 비여 있지 않을 경우
         for (Cookie cookies : ck) {
@@ -24,15 +30,13 @@
         if(sessionId != null){//생성된 세션이 존재 한다는 뜻 생성된 세션이 존재 하면 
             //userR(String)session.getAttribute("ranks");팀원인지 아닌지를 구분하고 싶어 하였는데 ??? 에로 가 난다? 왜??? 
             userName=(String)session.getAttribute("name");//사용자 이름을 가져 오겠다. 
+            userRank=(String)session.getAttribute("ranks");//사용자 이름을 가져 오겠다. 
         }
     }else if(sessionId== null){//???
         response.sendRedirect("logPage.jsp");
     }
    
-    String count="";
-    String writeDate="";
-    String memo="";
-    ArrayList<ArrayList<String>> dataList = new ArrayList<ArrayList<String>> ();
+
     //DB 연결
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect =DriverManager.getConnection("jdbc:mysql://localhost:3306/scheduleDB", "schedule","1234");//데이터 베이스 계정 아이디, 데이터베이스 계정 비밀번호
@@ -47,6 +51,17 @@
        data.add("'" + result.getString(4) + "'");//날짜
        data.add("'" + result.getString(3) + "'");//내용 
        dataList.add(data);
+    }
+
+    //부서를 테이블 조회 하기 
+    String sql2="SELECT *FROM ranks WHERE ranksNum=?";
+    PreparedStatement query2 =connect.prepareStatement(sql2);
+    int tmp=Integer.parseInt(userRank);
+    query2.setInt(1,tmp);//사용자의 직급이 무엇인지를 
+
+    ResultSet result2=query2.executeQuery();//데이터 베이스에 값을 불러와서 저장 하기 
+    while(result2.next()){
+        resultRrank=result2.getString(2);
     }
 
 %>
@@ -78,6 +93,7 @@
 
         <div>
             <input class="hedaderRightButton" id="addButton" type="button" value="추가" onclick="addMemoEvent()">
+            <input class="hedaderRightButton" id="managmentButton" type="button" value="추가" onclick="">
             <input class="hedaderRightButton" id="logOUtButton" type="button" value="로그아웃" onclick="logOutEvent()">
         </div>
 
@@ -121,13 +137,13 @@
     </main>
   
     <script>
-        document.getElementById("headerLeftSpan").innerHTML= "<%=userName%>";
         var nowYear;//현재 년도 저장하는 변수
         var nowMonth;//현재 월을 저장하는 변수
         var boardList = <%=dataList%>;//jsp에 arrylist를 js 변수에 저장
         var tagDistinguish=0;
 
         window.onload = function() {
+            document.getElementById("headerLeftSpan").innerHTML= "<%=resultRrank%>" + "     " + "<%=userName%>" ;
             var newMain=document.getElementById("main");//main을 가져온다.
             //var newList=document.getElementById("mainList");?? 여기에 자식으로 추가 하면 왜 안되지??
             var memoIndex;
@@ -171,7 +187,11 @@
             //현재 년도와 날짜를 출력 해주는 함수
             yearDate();
             visitTime();
+            // managemenButtonDisplay(); //관리자 버튼을 나타낼지 말지를 결정하는 함수
         }
+
+         managemenButtonDisplay(); //관리자 버튼을 나타낼지 말지를 결정하는 함수
+
         //수정 함수  수정을 그자리에서 일어 나게 하기
         function modifyEvent(index){
          console.log(index)
@@ -271,13 +291,23 @@
             console.log("호출")
         }
 
+        //관리자 버튼을 만들지 없앨지 결정 하는함수 
+        function managemenButtonDisplay(){
+            var managemenButtonDiv=document.getElementById("managmentButton");
+            if("<%=resultRrank%>" == "TeamLeader"){
+                managemenButtonDiv.style.display="block";
+            }else if("<%=resultRrank%>" == "TeamMember"){
+                managemenButtonDiv.style.display="none";
+            }
+        }
+
          //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
         function logOutEvent(){
             location.href="logOutModule.jsp";
         }
         console.log("<%=sessionId%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
-
-                
+        console.log("<%=userRank%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??
+        console.log("<%=resultRrank%>")//로그 아웃으로 세션 아이디 지우고 햇는데 세션 아이디가 나온다??     
     </script>
 </body>
 </html>

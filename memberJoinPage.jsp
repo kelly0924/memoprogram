@@ -156,7 +156,6 @@
             }else{
                 alert("중복체크를 하지 않았습니다.")
             }
-
         }
          console.log("<%=ranksList%>")
 
