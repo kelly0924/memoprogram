@@ -14,6 +14,7 @@
     String resultName="";
     String sessionId="";
     String userRanks="";
+    String userDepart="";
 
     if(id=="" || pw == ""){
         response.sendRedirect("logPage.jsp");
@@ -31,6 +32,7 @@
             resultName=result.getString(2);//사용자 이름
             resultPw=result.getString(3);
             userRanks=result.getString(5);//팀장인지 팀원인지 대표인지를 구분하기 위해 
+            userDepart=result.getString(4);//부서를 구분하기 위해
         }
         if(id.equals(resultId) && pw.equals(resultPw)){//로그인이 성공 한 경우
         // 세션 생성 한다. 로그인에 대한 세션 생성 --> 서버에 에서 유일한 세션 아이디 부여 하고 서버에
@@ -39,6 +41,7 @@
             session.setAttribute("id", id);
             session.setAttribute("name",resultName);//사용자에 이름도 세션에 포함 시킨다.
             session.setAttribute("ranks",userRanks);//팀원인지 팀장인지 를 구분하기 위해서 세션도 같이 새성 해주기
+            session.setAttribute("depart",userDepart);//각 부서를 구분 하기 위해
             //생성한 세션에서 사용자 id, pw 가져오기
             sessionId = session.getId();//생성된 세션 id를 가져온다. 
             //세션 값을 쿠키에 넣어서 주기 쿠키 생성
@@ -61,7 +64,7 @@
 </head>
 <body>
     <script>
-     console.log("id"+<%=id%>)
+     console.log("id"+<%=userDepart%>)
     </script>
 
 </body>

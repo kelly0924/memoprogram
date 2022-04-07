@@ -94,7 +94,7 @@
 
         <div id="headerRightDiv">
             <input class="hedaderRightButton" id="addButton" type="button" value="추가" onclick="addMemoEvent()">
-            <input class="hedaderRightButton" id="managmentButton" type="button" value="관리자" onclick="">
+            <input class="hedaderRightButton" id="managmentButton" type="button" value="관리자" onclick="managmentEvent()">
             <input class="hedaderRightButton" id="logOUtButton" type="button" value="로그아웃" onclick="logOutEvent()">
         </div>
 
@@ -103,8 +103,8 @@
     <main id="main">
       <%-- 메모를 추가 하기 추가 버튼 눌렀을때 생기는 돔  --%>
          <div id="mainContainer"> 
-            <div id="bodyDiv">
-                <form id="bodyDivForm" action="memoAddPage.jsp" method="post">
+            <div id="bodyDiv" class="mainAddPageModifyPageDiv">
+                <form id="bodyDivFormAdd" class="mainDivFrom" action="memoAddPage.jsp" method="post">
                     <div>
                         <input type="date" name="selectDate">
                         <input type="time" name="selectTime">
@@ -113,13 +113,13 @@
                     <input type="text" id="inputText" name="userInptMemo">
                     </div>
                     <div> 
-                        <input type="submit" value="저장" id="saveButton">
+                        <input type="button" value="저장" id="saveButton" onclick="saveButtonEvent()">
                     </div>
                 </form>
             </div>
             <%-- 메모를 수정 하기 위한 창이 뜨게 하는 것이다. --%>
-            <div id="mainModifyDiv">
-                <form id="bodyDivForm" action="modifyPage.jsp" method="post">
+            <div id="mainModifyDiv"class="mainAddPageModifyPageDiv">
+                <form id="bodyDivForm" class="mainDivFrom" action="modifyPage.jsp" method="post">
                     <div>
                         <input type="text" id="modifyDate" name="modiDate">
                     </div>
@@ -127,7 +127,7 @@
                     <input type="text" id="modifyMemo" name="modiMemo">
                     </div>
                     <div> 
-                        <input type="submit" value="수정" id="saveButton">
+                        <input type="submit" value="수정" id="saveButton" onclick="modifyButtonEvent()">
                     </div>
                 </form>
             <div>
@@ -195,20 +195,29 @@
 
         //수정 함수  수정을 그자리에서 일어 나게 하기
         function modifyEvent(index){
-         console.log(index)
-         var tmpDiv=document.getElementById("mainModifyDiv");
-            if(window.getComputedStyle(tmpDiv).display=='none'){
-               tmpDiv.style.display = 'block';
-            }else{
-		        tmpDiv.style.display = 'none';
-	        }
-         var tmpDate=document.getElementById("mainDivMemoDate" + index);
-         var tmpSpan=document.getElementById("mainDivMemoSpan" + index);
-         console.log(tmpSpan.innerHTML ,tmpDate.innerHTML)
-         document.getElementById("modifyDate").value=tmpDate.innerHTML;
-         document.getElementById("modifyMemo").value=tmpSpan.innerHTML;
-         //css 하기
+            console.log(index)
+            var tmpDiv=document.getElementById("mainModifyDiv");
+                if(window.getComputedStyle(tmpDiv).display=='none'){
+                tmpDiv.style.display = 'block';
+                var mc=document.getElementById("mainContainer");
+                mc.style.boxShadow=" rgba(85, 84, 84, 0.5) 0 0 0 9999px"
+                }else{
+                    tmpDiv.style.display = 'none';
+                }
+            var tmpDate=document.getElementById("mainDivMemoDate" + index);
+            var tmpSpan=document.getElementById("mainDivMemoSpan" + index);
+            console.log(tmpSpan.innerHTML ,tmpDate.innerHTML)
+            document.getElementById("modifyDate").value=tmpDate.innerHTML;
+            document.getElementById("modifyMemo").value=tmpSpan.innerHTML;
+            //css 하기
 
+        }
+        //수정 버튼을 눌렀을 경우 
+         function modifyButtonEvent(){
+           addFrom=document.getElementById("bodyDivFormModify");
+           var mc=document.getElementById("mainContainer");
+            mc.style.boxShadow="none";
+            addFrom.submit();
         }
 
         //삭제 이벤트 
@@ -225,10 +234,7 @@
             newInput.setAttribute("name","delet");
             newInput.setAttribute("value",tmpDate.innerHTML);
             newForm.appendChild(newInput);
-            newForm.submit();
-
-            
-            
+            newForm.submit();            
         }
         //년 일 날짜가 나오기 
         function yearDate(){
@@ -287,14 +293,19 @@
             if(window.getComputedStyle(tmpDiv).display=='none'){//window.getComputedStyle() 함수는 외부 css를 가져 올 것이다. 
                tmpDiv.style.display = 'block';
                var mc=document.getElementById("mainContainer");
-             console.log(1)
             //    window.getComputedStyle(mc).box-shadow=" rgba(85, 84, 84, 0.5) 0 0 0 9999px"
+               mc.style.boxShadow=" rgba(85, 84, 84, 0.5) 0 0 0 9999px"
             }else{
-		        tmpDiv.style.display = 'none';
-                //  document.getElementById("mainContainer").style.box-shadow="none";
-                console.log(2)
+                tmpDiv.style.display = 'none';
 	        }
             console.log("호출")
+        }
+        //새로 추가 하는 메모의 저장 버튼을 눌럿을 경우 
+        function saveButtonEvent(){
+           addFrom=document.getElementById("bodyDivFormAdd");
+           var mc=document.getElementById("mainContainer");
+            mc.style.boxShadow="none";
+            addFrom.submit();
         }
 
         //관리자 버튼을 만들지 없앨지 결정 하는함수 
@@ -307,7 +318,13 @@
             }
         }
 
-         //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
+        // 괄리자 버튼을 눌렀으 때 일어 나는 이벤트 
+        function managmentEvent(){
+            location.href="managmentPage.jsp";
+        }
+
+
+        //로그 아웃 하기 위해 로그 아웃으로 이동하는 함수 
         function logOutEvent(){
             location.href="logOutModule.jsp";
         }
